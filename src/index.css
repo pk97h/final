@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-100;
+  }
+  header {
+    @apply flex bg-white text-sm justify-between p-4 text-white
+  }
+  .navigation-bar-link {
+    @apply border rounded-lg px-5 py-2.5 border-black bg-black hover:border-gray-700 hover:bg-gray-700
+  }
+  .naivation-bar-link-wrapper {
+    @apply flex gap-2
+  }
+}
