@@ -146,9 +146,9 @@ const Signup = () => {
           </button>
           <Link
             to={"/login"}
-            className="sign-up-button text-center"
+            className="sign-up-button text-center bg-gray-300"
           >
-            로그인
+            로그인하러 가기
           </Link>
         </form>
       </div>
