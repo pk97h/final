@@ -8,7 +8,7 @@ const Signup = () => {
     email: "",
     nickname: "",
     password: "",
-    passWordConfirm: "",
+    passwordConfirm: "",
   });
 
   // 회원가입 폼 값 변경 핸들러
@@ -43,7 +43,7 @@ const Signup = () => {
       return;
     }
 
-    if (user.password != user.passWordConfirm) {
+    if (user.password != user.passwordConfirm) {
       alert("비밀번호가 일치하지 않습니다.");
       return;
     }
@@ -130,10 +130,10 @@ const Signup = () => {
             <label htmlFor="passWordConfirm" className="sign-up-label">비밀번호 확인</label>
             <input
               type="password"
-              id="passWordConfirm"
-              name="passWordConfirm"
+              id="passwordConfirm"
+              name="passwordConfirm"
               placeholder="비밀번호를 한 번 더 입력해주세요."
-              value={user.passWordConfirm}
+              value={user.passwordConfirm}
               onChange={handleSignUpChange}
               className="sign-up-input"
             />
