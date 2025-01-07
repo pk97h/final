@@ -25,6 +25,12 @@ const Login = () => {
       return;
     }
 
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!emailPattern.test(user.email)) {
+      alert("이메일 형식이 올바르지 않습니다.");
+      return;
+    }
+
     if (!user.password) {
       alert("비밀번호를 입력해주세요.");
       return;
@@ -60,7 +66,7 @@ const Login = () => {
               이메일
             </label>
             <input
-              type="text"
+              type="email"
               id="email"
               name="email"
               placeholder="이메일을 입력해주세요."
@@ -74,7 +80,7 @@ const Login = () => {
               비밀번호
             </label>
             <input
-              type="text"
+              type="password"
               id="password"
               name="password"
               placeholder="비밀번호를 입력해주세요."

@@ -1,7 +1,12 @@
 import { Link, Outlet } from "react-router-dom";
+import useAuthStore from "../stores/useAuthStore";
+import supabase from "../utils/supabase";
 
 const Layout = () => {
-  const user = true;
+  const { user } = useAuthStore();
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+  };
 
   return (
     <>
@@ -12,11 +17,11 @@ const Layout = () => {
               <img src="public/logoipsum-289.svg" />
             </Link>
             <div className="naivation-bar-link-wrapper">
-              <Link to={"/login"} className="navigation-bar-link">
-                로그인
+              <Link to={"/mypage"} className="px-5 py-2.5 text-black">
+                {user.nickname}
               </Link>
-              <Link to={"/signup"} className="navigation-bar-link">
-                회원가입
+              <Link onClick={handleLogout} to={"/"} className="navigation-bar-link">
+                로그아웃
               </Link>
             </div>
           </header>
@@ -29,11 +34,11 @@ const Layout = () => {
               <img src="public/logoipsum-289.svg" />
             </Link>
             <div className="naivation-bar-link-wrapper">
-              <Link to={"/mypage"} className="navigation-bar-link">
-                마이 페이지
+              <Link to={"/login"} className="navigation-bar-link">
+                로그인
               </Link>
-              <Link to={"/"} className="navigation-bar-link">
-                로그아웃
+              <Link to={"/signup"} className="navigation-bar-link">
+                회원가입
               </Link>
             </div>
           </header>
