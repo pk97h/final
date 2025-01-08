@@ -4,7 +4,7 @@ import Feed from "../components/Feed";
 const Home = () => {
   return (
     <>
-      <div className="max-w-screen-xl min-h-[90vh] mx-auto px-10 my-10">
+      <div className="max-w-screen-lg mx-auto px-10 my-10">
         <div className="flex justify-between items-center mb-4">
           <div className="text-2xl font-bold">글 목록</div>
           <Link
@@ -15,6 +15,9 @@ const Home = () => {
           </Link>
         </div>
         <div className="flex flex-col gap-4">
+          <Feed />
+          <Feed />
+          <Feed />
           <Feed />
           <Feed />
           <Feed />
