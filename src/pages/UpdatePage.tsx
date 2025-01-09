@@ -1,7 +1,11 @@
+import CreatePage from "./CreatePage";
+
 const UpdatePage = () => {
   return (
-    <div>수정 페이지</div>
-  )
-}
+    <>
+      <CreatePage isCreatePage={false} />
+    </>
+  );
+};
 
-export default UpdatePage
+export default UpdatePage;

@@ -14,7 +14,7 @@ const Layout = () => {
         <>
           <header>
             <Link to={"/"}>
-              <img src="public/logoipsum-289.svg" />
+              <img src="/logoipsum-289.svg" />
             </Link>
             <div className="naivation-bar-link-wrapper">
               <Link to={"/mypage"} className="px-5 py-2.5 text-black">
