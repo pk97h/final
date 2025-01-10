@@ -1,14 +1,14 @@
-import { useNavigate } from "react-router-dom";
-
-const FeedForm = ({ isCreatePage }: { isCreatePage: boolean }) => {
-  const navigate = useNavigate();
-
+const FeedForm = ({
+  formTitle,
+  children,
+}: {
+  formTitle: string;
+  children: React.ReactNode;
+}) => {
   return (
     <>
       <div className="flex flex-col px-10 my-10 gap-6 max-w-screen-lg mx-auto">
-        <h1 className="text-2xl font-bold">
-          {isCreatePage ? "작성하기" : "수정하기"}
-        </h1>
+        <h1 className="text-2xl font-bold">{formTitle}</h1>
         <div className="flex flex-col gap-2">
           <label htmlFor="" className="text-xl font-bold">
             제목
@@ -30,12 +30,7 @@ const FeedForm = ({ isCreatePage }: { isCreatePage: boolean }) => {
             className="h-96 border rounded-lg border-gray-300 p-3 resize-none"
           />
         </div>
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md ml-auto"
-          onClick={() => navigate("/")}
-        >
-          글쓰기
-        </button>
+        {children}
       </div>
     </>
   );
