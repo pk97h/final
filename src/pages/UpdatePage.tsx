@@ -1,9 +1,9 @@
-import CreatePage from "./CreatePage";
+import FeedForm from "../components/FeedForm";
 
 const UpdatePage = () => {
   return (
     <>
-      <CreatePage isCreatePage={false} />
+      <FeedForm isCreatePage={false} />
     </>
   );
 };
