@@ -9,15 +9,15 @@ const Detail = () => {
   return (
     <>
       <div className="flex flex-col max-w-screen-lg mx-auto px-10 my-10 gap-4">
-<div className="flex justify-between">
-        <button className="text-left" onClick={() => navigate(-1)}>
-          {"< 뒤로가기"}
-        </button>
-        <div className="flex gap-2">
-          <Link to={"/feeds/update/:id"}>수정</Link>
-          <button>삭제</button>
+        <div className="flex justify-between">
+          <button className="text-left" onClick={() => navigate(-1)}>
+            {"< 뒤로가기"}
+          </button>
+          <div className="flex gap-2">
+            <Link to={"/feeds/update/:id"}>수정</Link>
+            <button>삭제</button>
+          </div>
         </div>
-</div>
 
         <Feed truncated={false} />
         <div className="flex flex-col bg-white p-6 rounded-lg gap-5">

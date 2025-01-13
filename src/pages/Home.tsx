@@ -1,7 +1,23 @@
 import { Link } from "react-router-dom";
 import Feed from "../components/Feed";
+import { useQuery } from "@tanstack/react-query";
+import feedApi from "../api/feedApi";
 
 const Home = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["feeds"],
+    queryFn: feedApi,
+  });
+  console.log("data", data);
+  if (isLoading) return <div>Loading...</div>;
+  if (error)
+    return (
+      <div>
+        에러가 발생하였습니다. <br />
+        {error.message}
+      </div>
+    );
+
   return (
     <>
       <div className="max-w-screen-lg mx-auto px-10 my-10">
@@ -15,24 +31,11 @@ const Home = () => {
           </Link>
         </div>
         <div className="flex flex-col gap-4">
-          <Link to={"/feeds/:id"}>
-            <Feed />
-          </Link>
-          <Link to={"/feeds/:id"}>
-            <Feed />
-          </Link>
-          <Link to={"/feeds/:id"}>
-            <Feed />
-          </Link>
-          <Link to={"/feeds/:id"}>
-            <Feed />
-          </Link>
-          <Link to={"/feeds/:id"}>
-            <Feed />
-          </Link>
-          <Link to={"/feeds/:id"}>
-            <Feed />
-          </Link>
+          {data?.map((feed) => (
+            <Link to={"/feeds/:id"} key={feed.id}>
+              <Feed feed={feed} truncated={true}/>
+            </Link>
+          ))}
         </div>
       </div>
     </>
