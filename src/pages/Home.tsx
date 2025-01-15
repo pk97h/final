@@ -1,14 +1,13 @@
 import { Link } from "react-router-dom";
 import Feed from "../components/Feed";
 import { useQuery } from "@tanstack/react-query";
-import feedApi from "../api/feedApi";
+import { feedsApi } from "../api/feedApi";
 
 const Home = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["feeds"],
-    queryFn: feedApi,
+    queryFn: feedsApi,
   });
-  console.log("data", data);
   if (isLoading) return <div>Loading...</div>;
   if (error)
     return (
@@ -32,7 +31,7 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-4">
           {data?.map((feed) => (
-            <Link to={"/feeds/:id"} key={feed.id}>
+            <Link to={`/feeds/${feed.id}`} key={feed.id}>
               <Feed feed={feed} truncated={true}/>
             </Link>
           ))}
