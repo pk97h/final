@@ -8,7 +8,7 @@ const CreatePage = () => {
     <>
       <FeedForm formTitle={"작성하기"}>
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded-md ml-auto"
+          className="bg-yellow-500 text-white px-4 py-2 rounded-md ml-auto"
           onClick={() => navigate("/")}
         >
           작성완료
