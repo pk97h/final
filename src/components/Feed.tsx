@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import upvoteCountApi from "../api/upvoteApi";
-import commentCountApi from "../api/commentApi";
+import { commentCountApi } from "../api/commentApi";
 
 export interface FeedProps {
   id: string;
