@@ -4,20 +4,35 @@ import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
 import { useQuery } from "@tanstack/react-query";
 import { feedApi } from "../api/feedApi";
+import { commentApi } from "../api/commentApi";
 
 const Detail = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { id: feedId } = useParams();
 
+  // 개별 feed 가져오기
   const { data, isLoading, error } = useQuery({
-    queryKey: ["feeds", id],
+    queryKey: ["feeds", feedId],
     queryFn: () => {
-      if (!id) {
-				throw new Error("id가 없습니다.")
-			}
-      return feedApi(id)
+      if (!feedId) {
+        throw new Error("id가 없습니다.");
+      }
+      return feedApi(feedId);
     },
   });
+
+  // 개별 comment 가져오기
+  const { data: comments } = useQuery({
+    queryKey: ["feeds", feedId, "comments"],
+    queryFn: () => {
+      if (!feedId) {
+        throw new Error("id가 없습니다.");
+      }
+      return commentApi(feedId);
+    },
+  });
+
+  // 개별 feed 가져오기 로딩, 에러 처리
   if (isLoading) return <div>Loading...</div>;
   if (error)
     return (
@@ -39,12 +54,12 @@ const Detail = () => {
             <button>삭제</button>
           </div>
         </div>
-        <Feed truncated={false} feed={data}/>
+        <Feed truncated={false} feed={data} />
         <div className="flex flex-col bg-white p-6 rounded-lg gap-5">
-          <div className="font-bold mb-7">10 Comments</div>
-          <Comment />
-          <Comment />
-          <Comment />
+          <div className="font-bold mb-7">{comments?.length} Comments</div>
+          {comments?.map((comment) => (
+            <Comment key={comment.id} comment={comment} />
+          ))}
         </div>
         <CommentForm />
       </div>
