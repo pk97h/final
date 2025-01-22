@@ -1,9 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Feed from "../components/Feed";
 import { useQuery } from "@tanstack/react-query";
 import { feedsApi } from "../api/feedApi";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const { data, isLoading, error } = useQuery({
     queryKey: ["feeds"],
     queryFn: feedsApi,
@@ -31,9 +33,13 @@ const Home = () => {
         </div>
         <div className="flex flex-col gap-4">
           {data?.map((feed) => (
-            <Link to={`/feeds/${feed.id}`} key={feed.id}>
-              <Feed feed={feed} truncated={true}/>
-            </Link>
+          <div
+          key={feed.id}
+          onClick={() => navigate(`/feeds/${feed.id}`)}
+          className="cursor-pointer"
+        >
+          <Feed feed={feed} truncated={true} />
+        </div>
           ))}
         </div>
       </div>
