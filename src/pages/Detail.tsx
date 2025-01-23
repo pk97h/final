@@ -61,7 +61,7 @@ const Detail = () => {
             <Comment key={comment.id} comment={comment} />
           ))}
         </div>
-        <CommentForm />
+        <CommentForm feedId={feedId}/>
       </div>
     </>
   );
