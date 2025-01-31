@@ -83,7 +83,6 @@ const Comment = ({ comment }: { comment: CommentProps }) => {
         )}
         <div className="flex flex-col flex-1 gap-5">
           <div className="font-bold">{comment.user.nickname}</div>
-
           {isEditing ? (
             <textarea
               value={editContent}

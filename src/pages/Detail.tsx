@@ -2,13 +2,15 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Feed from "../components/Feed";
 import Comment from "../components/Comment";
 import CommentForm from "../components/CommentForm";
-import { useQuery } from "@tanstack/react-query";
-import { feedApi } from "../api/feedApi";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { deleteFeed, feedApi } from "../api/feedApi";
 import { commentApi } from "../api/commentApi";
+import useAuthStore from "../stores/useAuthStore";
 
 const Detail = () => {
   const navigate = useNavigate();
   const { id: feedId } = useParams();
+  const { user } = useAuthStore();
 
   // 개별 feed 가져오기
   const { data, isLoading, error } = useQuery({
@@ -32,6 +34,30 @@ const Detail = () => {
     },
   });
 
+  const deleteFeedMutation = useMutation({
+    mutationFn: async () => {
+      if (!feedId) {
+        alert("게시글이 없습니다.");
+        return;
+      }
+      await deleteFeed({
+        id: feedId,
+      });
+    },
+    onSuccess: () => {
+      navigate("/");
+    },
+    onError: (error) => {
+      alert(error.message);
+    },
+  });
+
+  const handleDelete = () => {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      deleteFeedMutation.mutate();
+    }
+  };
+
   // 개별 feed 가져오기 로딩, 에러 처리
   if (isLoading) return <div>Loading...</div>;
   if (error)
@@ -49,10 +75,12 @@ const Detail = () => {
           <button className="text-left" onClick={() => navigate(-1)}>
             {"< 뒤로가기"}
           </button>
-          <div className="flex gap-2">
-            <Link to={"/feeds/update/:id"}>수정</Link>
-            <button>삭제</button>
-          </div>
+          {user?.id === data.user_id ? (
+            <div className="flex gap-2">
+              <Link to={`/feeds/update/${data.id}`}>수정</Link>
+              <button onClick={handleDelete}>삭제</button>
+            </div>
+          ) : null}
         </div>
         <Feed truncated={false} feed={data} />
         <div className="flex flex-col bg-white p-6 rounded-lg gap-5">
@@ -61,7 +89,7 @@ const Detail = () => {
             <Comment key={comment.id} comment={comment} />
           ))}
         </div>
-        <CommentForm feedId={feedId}/>
+        <CommentForm feedId={feedId} />
       </div>
     </>
   );
