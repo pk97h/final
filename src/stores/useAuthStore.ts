@@ -11,6 +11,7 @@ interface AuthStore {
       id: string;
       email: string;
       nickname: string;
+      img_url: string;
     } | null
   ) => void;
 }
