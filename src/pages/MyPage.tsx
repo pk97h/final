@@ -4,7 +4,7 @@ import supabase from "../utils/supabase";
 import { useEffect, useState } from "react";
 
 const MyPage = () => {
-  const { user } = useAuthStore();
+  const { user, setUser } = useAuthStore();
   const [nickname, setNickname] = useState("");
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);
@@ -49,33 +49,57 @@ const MyPage = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsUploading(true);
+    try {
+      setIsUploading(true);
+      const updateData = {
+        nickname,
+        img_url: previewImage,
+      };
 
-    const updateData = {
-      nickname,
-      img_url: previewImage,
-    };
+      if (profileImage) {
+        // 확장자를 분리하고, 유저 별로 이미지 경로를 다르게 설정
+        const fileExt = profileImage.name.split(".").pop();
+        const filePath = `${user?.id}/profile_${Date.now()}.${fileExt}`;
 
-    if (profileImage) {
-      // 확장자를 분리하고, 유저 별로 이미지 경로를 다르게 설정
-      const fileExt = profileImage.name.split(".").pop();
-      const filePath = `${user?.id}/profile_${Date.now()}.${fileExt}`;
+        // storage에 데이터 추가
+        const { error } = await supabase.storage
+          .from("profileImage")
+          .upload(filePath, profileImage);
+        if (error) {
+          throw new Error(`이미지 업로드에 실패했습니다. ${error.message}`);
+        }
 
-      // storage에 데이터 추가
-      await supabase.storage
-        .from("profileImage")
-        .upload(filePath, profileImage);
+        // storage에서 데이터 가져오기
+        const { data } = supabase.storage
+          .from("profileImage")
+          .getPublicUrl(filePath);
+        updateData.img_url = data.publicUrl;
+      }
 
-      // storage에서 데이터 가져오기
-      const { data } = supabase.storage
-        .from("profileImage")
-        .getPublicUrl(filePath);
-      updateData.img_url = data.publicUrl;
+      // users 테이블에 데이터 추가
+      const { error: userError } = await supabase
+        .from("users")
+        .update(updateData)
+        .eq("id", user?.id);
+      if (userError) {
+        throw new Error(
+          `유저 정보 업데이트에 실패했습니다. ${userError.message}`
+        );
+      }
+
+      setUser({
+        id: user?.id ?? "",
+        email: user?.email ?? "",
+        nickname: updateData.nickname ?? "",
+        img_url: updateData.img_url ?? "",
+      });
+      
+
+    } catch (error) {
+      alert(`저장에 실패했습니다. ${error}`);
+    } finally {
+      setIsUploading(false);
     }
-
-    // users 테이블에 데이터 추가
-    await supabase.from("users").update(updateData).eq("id", user?.id);
-    setIsUploading(false);
   };
 
   return (
