@@ -3,9 +3,13 @@ import useAuthStore from "../stores/useAuthStore";
 import supabase from "../utils/supabase";
 
 const Layout = () => {
-  const { user } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+		if (error) {
+			alert(`로그아웃에 실패했습니다. ${error.message}`);
+		}
   };
 
   return (

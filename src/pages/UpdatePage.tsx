@@ -63,7 +63,7 @@ const UpdatePage = () => {
         handleContentChange={handleContentChange}
         handleSubmit={handleSubmit}
       >
-        <button className="bg-yellow-500 text-white px-4 py-2 rounded-md ml-auto">
+        <button className="write-button ml-auto">
           수정완료
         </button>
       </FeedForm>

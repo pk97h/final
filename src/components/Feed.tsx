@@ -15,19 +15,21 @@ const Feed = ({ truncated, feed }: { truncated: boolean; feed: FeedProps }) => {
   const { user } = useAuthStore();
   const queryClient = useQueryClient();
 
+  // 개별 댓글 갯수 가져오기
   const { data: commentsCount } = useQuery({
     queryKey: ["comments", feed.id, "count"],
     queryFn: () => commentCountApi(feed.id),
   });
 
+    // 개별 좋아요 갯수 가져오기
   const { data: upvotesCount } = useQuery({
-    queryKey: ["upvotes", feed.id, "count"],
+    queryKey: ["feeds", feed.id, "upvotes", "count"],
     queryFn: () => upvoteCountApi(feed.id),
   });
 
-  // 개별 upvote 가져오기
+  // 개별 좋아요 가져오기
   const { data: upvotes } = useQuery({
-    queryKey: ["upvotes", feed.id],
+    queryKey: ["feeds", feed.id, "upvotes",],
     queryFn: () => {
       if (!feed.id) {
         throw new Error("id가 없습니다.");
@@ -42,8 +44,7 @@ const Feed = ({ truncated, feed }: { truncated: boolean; feed: FeedProps }) => {
   const toggleMutation = useMutation({
     mutationFn: async () => {
       if (!user) {
-        alert("로그인 후 이용 가능합니다.");
-        return;
+        throw new Error("로그인 후 이용해주세요.")
       }
       await toggleUpvote({
         feedId: feed.id,
@@ -52,13 +53,16 @@ const Feed = ({ truncated, feed }: { truncated: boolean; feed: FeedProps }) => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["upvotes", feed.id] });
+      queryClient.invalidateQueries({ queryKey: ["feeds", feed.id, "upvotes"] });
     },
+    onError: (error) => {
+			alert(error.message);
+		}
   });
 
   return (
     <>
-      <div key={feed.id} className="flex bg-white p-6 rounded-lg h-46">
+      <div key={feed.id} className="flex bg-white p-6 rounded-lg h-40">
         <div className="flex flex-col justify-center items-center text-sm mb-auto">
           <button
             onClick={(e) => {

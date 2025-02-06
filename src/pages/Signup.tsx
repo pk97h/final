@@ -53,11 +53,6 @@ const Signup = () => {
       {
         email: user.email,
         password: user.password,
-        options: {
-          data: {
-            nickname: user.nickname,
-          },
-        },
       }
     );
 

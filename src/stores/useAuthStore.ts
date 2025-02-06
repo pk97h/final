@@ -1,19 +1,15 @@
 import { create } from "zustand";
 
+interface User {
+  id: string;
+  email: string;
+  nickname: string;
+  img_url: string;
+}
+
 interface AuthStore {
-  user: {
-    id: string;
-    email: string;
-    nickname: string;
-  } | null;
-  setUser: (
-    user: {
-      id: string;
-      email: string;
-      nickname: string;
-      img_url: string;
-    } | null
-  ) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
 }
 
 const useAuthStore = create<AuthStore>()((set) => ({

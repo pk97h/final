@@ -8,12 +8,23 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     supabase.auth.onAuthStateChange((_, session) => {
       if (session && session.user.email) {
-        setUser({
-          id: session.user.id,
-          email: session.user.email,
-          nickname: session.user.user_metadata.nickname,
-          img_url: session.user.user_metadata.img_url,
-        });
+        supabase
+          .from("users")
+          .select("*")
+          .eq("id", session.user.id)
+          .then(({ data, error }) => {
+            if (error || !data?.length) {
+              setUser(null);
+              return;
+            }
+
+            setUser({
+              id: data[0].id,
+              email: data[0].email,
+              nickname: data[0].nickname,
+              img_url: data[0].img_url,
+            });
+          });
       } else {
         setUser(null);
       }

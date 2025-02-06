@@ -22,8 +22,7 @@ const CreatePage = () => {
   const addFeedMutation = useMutation({
     mutationFn: async () => {
       if (!user) {
-        alert("로그인 후 이용해주세요.");
-        return;
+        throw new Error("로그인 후 이용해주세요.");
       }
       await addFeed({
         title,
@@ -56,7 +55,7 @@ const CreatePage = () => {
       >
         <button
           type="submit"
-          className="bg-yellow-500 text-white px-4 py-2 rounded-md ml-auto"
+          className="write-button ml-auto"
         >
           작성완료
         </button>
