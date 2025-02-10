@@ -62,7 +62,7 @@ const Feed = ({ truncated, feed }: { truncated: boolean; feed: FeedProps }) => {
 
   return (
     <>
-      <div key={feed.id} className="flex bg-white p-6 rounded-lg h-40">
+      <div key={feed.id} className="flex bg-white p-6 rounded-lg">
         <div className="flex flex-col justify-center items-center text-sm mb-auto">
           <button
             onClick={(e) => {
@@ -78,7 +78,7 @@ const Feed = ({ truncated, feed }: { truncated: boolean; feed: FeedProps }) => {
         </div>
         <div className="flex-1 px-10 flex flex-col gap-4 w-10/12">
           <div className="flex flex-col gap-2">
-            <div className="text-xl font-bold">{feed.title}</div>
+            <div className={`text-xl font-bold ${truncated ? "truncate" : ""}`}>{feed.title}</div>
             <div className={`text-sm ${truncated ? "truncate" : ""}`}>
               {feed.content}
             </div>
