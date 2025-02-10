@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-100;
+  }
+
+  /* button */
+  .write-button {
+    @apply bg-blue-500 text-white px-4 py-2 rounded-md
+  }
+
+  /* Layout */
+  header {
+    @apply items-center flex bg-white text-sm justify-between p-4 text-white
+  }
+  .naivation-bar-link-wrapper {
+    @apply flex gap-2
+  }
+  .navigation-bar-link {
+    @apply border rounded-lg px-5 py-2.5 border-black bg-black hover:border-gray-700 hover:bg-gray-700
+  }
+
+  /* SignUp */
+  .sign-up-form {
+    @apply flex flex-col gap-4 w-80
+  }
+  .sign-up-label {
+    @apply font-bold
+  }
+  .sign-up-input-wrapper {
+    @apply flex flex-col gap-2
+  }
+  .sign-up-input {
+    @apply border border-gray-300 rounded-md p-2
+  }
+  .sign-up-button {
+    @apply py-2 px-4 text-white bg-blue-500 rounded-md
+  }
+
+    /* Login */
+    .login-form {
+      @apply flex flex-col gap-4 w-80
+    }
+    .login-label {
+      @apply font-bold
+    }
+    .login-input-wrapper {
+      @apply flex flex-col gap-2
+    }
+    .login-input {
+      @apply border border-gray-300 rounded-md p-2
+    }
+    .login-button {
+      @apply py-2 px-4 text-white bg-blue-500 rounded-md
+    }
+}
