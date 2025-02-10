@@ -34,10 +34,10 @@ const Home = () => {
         <div className="flex flex-col gap-4">
           {isLoading ? (
             <div className="flex flex-col gap-4">
-              <div className="h-40 bg-gray-200 animate-pulse rounded-lg" />
-              <div className="h-40 bg-gray-200 animate-pulse rounded-lg" />
-              <div className="h-40 bg-gray-200 animate-pulse rounded-lg" />
-              <div className="h-40 bg-gray-200 animate-pulse rounded-lg" />
+              <div className="h-36 bg-gray-200 animate-pulse rounded-lg" />
+              <div className="h-36 bg-gray-200 animate-pulse rounded-lg" />
+              <div className="h-36 bg-gray-200 animate-pulse rounded-lg" />
+              <div className="h-36 bg-gray-200 animate-pulse rounded-lg" />
             </div>
           ) : (
             data?.map((feed) => (
